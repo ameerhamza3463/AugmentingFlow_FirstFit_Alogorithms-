@@ -2,24 +2,22 @@ class Graph:
     def __init__(self, graph):
         self.graph = graph
         self.row = len(graph)
-        
-    def BFS(self, s, t, parent):
+
+    def My_BFS(self, s, t, parent):
         visited = [False] * (self.row)
         queue = []
         queue.append(s)
         visited[s] = True
         while queue:
             u = queue.pop(0)
-            for ind, val in enumerate(self.graph[u]):
-                if visited[ind] == False and val > 0:
-                    queue.append(ind)
-                    visited[ind] = True
-                    parent[ind] = u
-                    if ind == t:
+            for index, val in enumerate(self.graph[u]):
+                if visited[index] == False and val > 0:
+                    queue.append(index)
+                    visited[index] = True
+                    parent[index] = u
+                    if index == t:
                         return True
         return False
-
-
 
 
 # Helping functions
@@ -38,24 +36,22 @@ def convert_to_dict_matrix(g):
         dict_matrix[u] = {}
         for v, capacity in enumerate(g[u]):
             if capacity > 0:
-                dict_matrix[u][v] = capacity    
+                dict_matrix[u][v] = capacity
     return dict_matrix
 
+
 def FordFulkerson(graph, source, sink):
-    
     parent = [-1] * (graph.row)
 
-    max_flow = 0  
+    max_flow = 0
 
-    
-    while graph.BFS(source, sink, parent):
+    while graph.My_BFS(source, sink, parent):
         path_flow = float("Inf")
         s = sink
         while s != source:
             path_flow = min(path_flow, graph.graph[parent[s]][s])
             s = parent[s]
 
-        
         max_flow += path_flow
 
         v = sink
@@ -66,7 +62,7 @@ def FordFulkerson(graph, source, sink):
             v = parent[v]
 
         temp_graph = convert_to_dict_matrix(graph.graph)
-    
+
     DiGraph(temp_graph).show(edge_labels=True)
 
     return max_flow
@@ -75,12 +71,12 @@ def FordFulkerson(graph, source, sink):
 # This means just my main function
 if __name__ == "__main__":
     g1 = {
-        0: {1: 16, 2: 13},
-        1: {3: 12, 2: 10},
-        2: {1: 4, 4: 14},
-        3: {2: 9, 5: 20},
-        4: {3: 7, 5: 4},
-        5: {},
+        0: {1: 10, 2: 7},
+        1: {3: 3, 2: 9},
+        2: {1: 6, 4: 11},
+        3: {2: 9, 5: 18},
+        4: {3: 6, 5: 4},
+        5: {4: 2, 1: 3},
     }
 
     source = 0
