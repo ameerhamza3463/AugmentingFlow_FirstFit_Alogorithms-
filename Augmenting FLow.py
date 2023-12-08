@@ -109,35 +109,38 @@ class Graph:
                 v = parent[v]
 
             temp_graph = convert_to_dict_matrix(self.graph)
+        # Draw the final graph
         DiGraph(temp_graph).show(edge_labels=True)
-        # Clear the output cell
 
         return max_flow
 
 
-# Create a graph given in the above diagram
-g1 = {
-    0: {1: 16, 2: 13},
-    1: {3: 12, 2: 10},
-    2: {1: 4, 4: 14},
-    3: {2: 9, 5: 20},
-    4: {3: 7, 5: 4},
-    5: {},
-}
+# This means just main function
+if __name__ == "__main__":
+    # Need to take the input in this form.
+    g1 = {
+        0: {1: 16, 2: 13},
+        1: {3: 12, 2: 10},
+        2: {1: 4, 4: 14},
+        3: {2: 9, 5: 20},
+        4: {3: 7, 5: 4},
+        5: {},
+    }
 
+    # Convert g1 into g2 by invoking convert_to_incident_matrix function
+    # g2 = [
+    #     [0, 16, 13, 0, 0, 0],
+    #     [0, 0, 10, 12, 0, 0],
+    #     [0, 4, 0, 0, 14, 0],
+    #     [0, 0, 9, 0, 0, 20],
+    #     [0, 0, 0, 7, 0, 4],
+    #     [0, 0, 0, 0, 0, 0],
+    # ]
 
-g2 = [
-    [0, 16, 13, 0, 0, 0],
-    [0, 0, 10, 12, 0, 0],
-    [0, 4, 0, 0, 14, 0],
-    [0, 0, 9, 0, 0, 20],
-    [0, 0, 0, 7, 0, 4],
-    [0, 0, 0, 0, 0, 0],
-]
+    # define the source and sink
+    source = 0
+    sink = 5
 
-
-source = 0
-sink = 5
-
-g = Graph(convert_to_incident_matrix(g1))
-print("The maximum possible flow is %d " % g.FordFulkerson(source, sink))
+    g = Graph(convert_to_incident_matrix(g1))
+    max_flow = g.FordFulkerson(source, sink)
+    print(f"The maximum possible flow is {max_flow}")
